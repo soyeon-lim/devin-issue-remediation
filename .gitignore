@@ -1,0 +1,15 @@
+# secrets
+.env
+
+
+# take-home assignment material from Cognition - do not publish
+assignment/
+
+# local
+__pycache__/
+*.pyc
+.venv/
+server.log
+server.err
+find_dependency_issue.py
+cloudflared.exe
