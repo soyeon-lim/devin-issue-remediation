@@ -128,8 +128,7 @@ to a label added after the fact.
 
 The webhook only reacts to `action: opened`, and there is no de-duplication: every accepted delivery
 opens a session. GitHub's **Redeliver** button (Settings → Webhooks → Recent Deliveries) is how a
-failed delivery gets retried — used for real during testing, see *What broke during the real run*
-below — but redelivering one that actually succeeded opens a second session and a second PR. Check
+failed delivery gets retried — used for real during testing — but redelivering one that actually succeeded opens a second session and a second PR. Check
 `runs.jsonl` for that issue before redelivering.
 
 ## Observability
