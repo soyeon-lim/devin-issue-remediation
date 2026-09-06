@@ -308,10 +308,15 @@ def files_changed_count(run: dict) -> str:
     return str(len(files_changed)) if files_changed else "—"
 
 
-def outcome_tooltip(run: dict) -> str:
-    """root_cause/summary from structured_output, shown as a hover tooltip on the outcome pill."""
+def outcome_detail(run: dict) -> str:
+    """root_cause/summary from structured_output, shown inline under the outcome pill — visible
+    by default rather than hidden behind a hover, since not every row has this (only sessions
+    that got a structured_output_schema do), and there's no visual cue to hover a row that lacks it."""
     text = run.get("root_cause") or run.get("summary")
-    return f' title="{html.escape(text)}"' if text else ""
+    if not text:
+        return ""
+    escaped = html.escape(text)
+    return f'<div class="detail" title="{escaped}">{escaped}</div>'
 
 
 def daily_series(runs: list[dict]) -> list[dict]:
@@ -427,8 +432,8 @@ def line_chart_svg(daily: list[dict]) -> str:
 def render_dashboard(pipeline: dict) -> str:
     rows = "".join(
         f"<tr><td>#{r['issue_number']}</td>"
-        f"<td{outcome_tooltip(r)}><span class='pill {STATUS_PILL.get(r['status'], ('pill-muted', r['status']))[0]}'>"
-        f"{STATUS_PILL.get(r['status'], ('pill-muted', r['status']))[1]}</span></td>"
+        f"<td><span class='pill {STATUS_PILL.get(r['status'], ('pill-muted', r['status']))[0]}'>"
+        f"{STATUS_PILL.get(r['status'], ('pill-muted', r['status']))[1]}</span>{outcome_detail(r)}</td>"
         f"<td>{tests_pill(r)}</td>"
         f"<td class='num'>{files_changed_count(r)}</td>"
         f"<td class='num'>{fmt_duration(r.get('duration_sec'))}</td>"

@@ -25,6 +25,7 @@
   .pill-muted { background:#e7e9ea; color:#5b6469; }
   .pill-warn { background:#f7e0dd; color:#a03a2a; }
   .note { font-size:12px; color:#767c82; margin-top:2px; }
+  .detail { font-size:12px; color:#767c82; margin-top:5px; max-width:440px; line-height:1.4; }
   .chart-wrap { background:#fff; border:1px solid #dfe2e4; border-radius:8px; padding:12px 12px 4px; }
   .chart-span { font-size:11px; font-weight:600; color:#5b6469; text-transform:uppercase; letter-spacing:.03em; margin-bottom:4px; }
   .line-chart { width:100%; height:auto; display:block; }
@@ -54,8 +55,9 @@
     would watch to see if this is keeping up.</p>
   $daily_chart
 
-  <h2>How each issue was triaged</h2>
-  <p class="note">Hover the outcome pill for Devin's own root-cause / summary, when available.</p>
+  <h2>Issue outcomes</h2>
+  <p class="note">Root-cause / summary is Devin's own, straight from structured output — shown
+    when the session provided one.</p>
   <table>
     <thead><tr><th>Issue</th><th>Outcome</th><th>Tests</th><th>Files</th><th>Time</th><th>Evidence</th></tr></thead>
     <tbody>$rows</tbody>
