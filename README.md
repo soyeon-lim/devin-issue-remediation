@@ -33,6 +33,8 @@ The expensive part of fixing bugs like this is not the patch. It is that finding
 somebody to read code nobody has a reason to read, and confirm the suspicion by actually running it.
 That is the work this project hands to Devin.
 
+This one is illustrative — the issues actually run through the pipeline may be different. 
+
 ## What this system does
 
  A FastAPI service turns a new GitHub issue into a triage decision,
