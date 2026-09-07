@@ -184,9 +184,7 @@ The question this is built to answer is "how would an engineering leader know th
   is claimed here rather than an invented one. Wall-clock duration is reported instead.
 - **No webhook signature verification.** Anyone who can reach the endpoint can spend ACUs. Required
   before this is exposed anywhere real; the demo tunnel was torn down afterwards.
-- **No independent CI gate.** The system verifies that a PR was opened, not that it is green. Devin
-  is instructed to run the unit tests itself, and a second session verifies, but neither is a
-  branch-protection-grade check.
+- **No independent CI gate.** The system verifies that a PR was opened, not that it is green.
 - **No retries on a failed session.** A session that ends badly is recorded, not retried, and no
   follow-up message is sent to it. (Transient *polling* errors are retried — see below.)
 - **No de-duplication.** `delivery_id` is not tracked, so a redelivered `opened` event (GitHub's own
