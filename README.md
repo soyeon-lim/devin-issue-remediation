@@ -133,28 +133,25 @@ failed delivery gets retried — used for real during testing — but redeliveri
 
 ## Observability
 
-`GET /metrics` reduces `runs.jsonl` to one record per issue (latest wins) and counts outcomes:
+`GET /dashboard` is an HTML page with three sections.
 
-```json
-{
-  "total_issues": 5,
-  "pr_opened": 3,
-  "not_a_bug": 1,
-  "skipped_by_triage": 1,
-  "timeout_or_incomplete": 0,
-  "dry_run": false,
-  "runs": [
-    {"issue_number": 2, "status": "pr_opened", "pr_url": "...", "session_url": "...",
-     "duration_sec": 1840, "root_cause": "...", "files_changed": ["superset/utils/core.py"],
-     "tests_passed": true, "summary": "..."}
-  ]
-}
-```
+**This Pipeline** — summary cards at the top: issues processed, PRs opened, not a bug, skipped by triage, timeout/incomplete, avg time to PR, and avg time to any outcome. This is the number an engineering leader would check first.
 
-The question this is built to answer is "how would an engineering leader know this is working?" —
-so it reports the two things that would make them turn it off: how many issues went in versus how
-many produced a mergeable PR, and how long each took. Every record carries the Devin session URL,
-so any number can be traced back to the transcript that produced it.
+**Daily Throughput** — sessions created, PRs opened, and total minutes spent per day, so a leader can see whether the system is keeping up with incoming issues.
+
+**Issue Outcomes** — one row per issue, latest run wins:
+
+| Column | What it shows |
+|---|---|
+| Issue | Issue number |
+| Outcome | `PR opened` / `Not a bug` / `Skipped` / (timeout, if it happens) |
+| Root cause / summary | Devin's own structured output, shown when the session provided one |
+| Tests | Pass/fail, when applicable |
+| Files | Number of files changed |
+| Time | Session duration |
+| Evidence | Link to the PR, the issue, or the session transcript |
+
+The question this is built to answer is "how would an engineering leader know this is working?" — so it reports the two things that would make them turn it off: how many issues went in versus how many produced a mergeable PR, and how long each took. Every row links back to the PR, issue, or Devin session transcript that produced it, so any number can be traced to its source.
 
 ## Verifying Devin's output
 
