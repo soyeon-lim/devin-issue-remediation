@@ -63,7 +63,7 @@ triage: does the issue carry `devin-auto`?
         append to runs.jsonl (with measured duration)
         |
         v
-        GET /metrics
+        GET /dashboard
 ```
 
 The prompt is the part that matters. It does not say "fix this." It says: decide whether this is
@@ -152,24 +152,6 @@ failed delivery gets retried — used for real during testing — but redeliveri
 | Evidence | Link to the PR, the issue, or the session transcript |
 
 The question this is built to answer is "how would an engineering leader know this is working?" — so it reports the two things that would make them turn it off: how many issues went in versus how many produced a mergeable PR, and how long each took. Every row links back to the PR, issue, or Devin session transcript that produced it, so any number can be traced to its source.
-
-## Verifying Devin's output
-
-Agent output is not taken at face value.
-
-- **Each PR diff was read by hand** against the bug it claims to fix, and each of the three bugs was
-  independently confirmed in the source before the run: the `getattr`-on-a-dict in
-  `merge_extra_form_data`, the missing `hour` in the `get_since_until` unit regex, and the
-  paren-counting branch in `split` that runs regardless of quote state.
-- PR #8 goes marginally beyond the reported bug: it also clamps `parens` at zero, so a stray `)`
-  can no longer poison every subsequent split. That is a real second defect and it is tested, but it
-  was not in the issue.
-- The fork has GitHub Actions disabled (0 workflow runs), so CI status is not available there, and
-  running Superset's full CI on a fork is not practical.
-- **Not yet done:** an independent Devin session that checks out each PR branch and runs
-  `pytest tests/unit_tests/utils -q` without having written the code. Right now the only evidence
-  the tests pass is the transcript of the session that wrote them, which is exactly the kind of
-  self-report that should not be taken at face value.
 
 
 ## Devin API notes (v3)
